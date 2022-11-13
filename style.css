@@ -1,0 +1,67 @@
+*, *::after, *::before
+{
+	box-sizing:  broder-box;
+}
+
+/*setting CSS variables*/
+:root
+{
+	--cell-size: 100px;
+	--mark-size: calc(var(--cell-size) *.9);
+}
+
+body
+{
+	margin: 0;
+}
+
+/*Styling the board*/
+.board
+{
+	width: 100vw; /*vw = viewport width*/
+	height:	100vh; /*vw = viewport height*/
+	display: grid;
+	justify-content: center;
+	align-content: center;
+	justify-items: center;
+	align-items: center;
+	grid-template-columns: repeat(3, auto);
+}
+
+/*Styling cells*/
+.cell
+{
+	width: var(--cell-size);
+	height: var(--cell-size);
+	border: 1px solid black;
+}
+
+.cell:first-child,
+.cell:nth-child(2),
+.cell:nth-child(3)
+{
+	border-top: none;
+}
+
+/*cells 1, 4, 7*/
+.cell:nth-child(3n + 1)
+{
+	border-left: none;
+}
+
+/*cells which is multiple of 3*/
+.cell:nth-child(3n)
+{
+	border-right: none;
+}
+
+/*cells 7, 8, 9*/
+.cell:nth-child(7),
+.cell:nth-child(8),
+.cell:last-child
+{
+	border-bottom: none;
+}
+
+/*using css to create cross and circle*/
+
