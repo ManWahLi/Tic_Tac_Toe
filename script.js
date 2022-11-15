@@ -26,9 +26,6 @@ function load() {
 }
 
 function startGame() {
-    // sets board to board x class to start the game
-    board.classList.add(X_CLASS)
-    
     // adds an one time click event to each cell
     for(const cell of cells)
     {
@@ -37,7 +34,8 @@ function startGame() {
         cell.removeEventListener('click', handleClick)
         cell.addEventListener('click', handleClick, { once: true } )
     }
-
+    circleTurn = false;
+    setBoardHoverClass();
     message.style.display = 'none'
 }
 
@@ -52,9 +50,9 @@ function handleClick(e) {
     else if (isDraw()){
         endGame(true)
     }
-    else {     
+    else {
+        swapTurns()
         setBoardHoverClass()
-        swapTurns()   
     }
 }
 
@@ -84,13 +82,13 @@ function swapTurns() {
 }
 
 function setBoardHoverClass() {
-    if (circleTurn) {
+    if (circleTurn) {         
+        board.classList.remove(X_CLASS)
+        board.classList.add(CIRCLE_CLASS)     
+    }
+    else{  
         board.classList.remove(CIRCLE_CLASS)
         board.classList.add(X_CLASS)
-    }
-    else{
-        board.classList.remove(X_CLASS)
-        board.classList.add(CIRCLE_CLASS)
     }
 }
 
