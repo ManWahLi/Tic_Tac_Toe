@@ -1,9 +1,13 @@
+/*	
+	box-sizing: 
+	include the padding and border in an element's total width and height.
+*/
 *, *::after, *::before
 {
-	box-sizing:  broder-box;
+	box-sizing:  border-box;
 }
 
-/*setting CSS variables*/
+/*declares and defines CSS variables*/
 :root
 {
 	--cell-size: 100px;
@@ -15,27 +19,41 @@ body
 	margin: 0;
 }
 
-/*Styling the board*/
 .board
 {
-	width: 100vw; /*vw = viewport width*/
-	height:	100vh; /*vw = viewport height*/
+	/*sets the board size to viewport width and height*/
+	width: 100vw;
+	height:	100vh;
+	/*sets board to be a grid container. its child items become grid-items.*/
 	display: grid;
+	/*specifies the number (and the widths) of columns in a grid layout.*/
+	grid-template-columns: auto auto auto; /*or use 'repeat(3, auto)'*/
+	/*aligns the flex items at the center of the container (horizontally)*/
 	justify-content: center;
+	/*aligns the flex items at the center of the container (vertically)*/
 	align-content: center;
+	/*
 	justify-items: center;
 	align-items: center;
-	grid-template-columns: repeat(3, auto);
+	*/
 }
 
-/*Styling cells*/
 .cell
 {
+	/*sets cell size and border on the board*/
 	width: var(--cell-size);
 	height: var(--cell-size);
 	border: 1px solid black;
+	/*sets cells to be flex items, as well as flexible container of its child elements*/
+	display: flex;
+	/*align contents and items to the center*/
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	cursor: pointer;
 }
 
+/*cells 1, 2, 3*/
 .cell:first-child,
 .cell:nth-child(2),
 .cell:nth-child(3)
@@ -63,5 +81,115 @@ body
 	border-bottom: none;
 }
 
-/*using css to create cross and circle*/
+/*handles cursor and hover effect*/
+/*
+	pointer cursor for .cell class and 
+	not-allowed cursor for .cell.x and .cell.circle classes
+*/
+.cell.x,
+.cell.circle
+{
+	cursor: not-allowed;
+}
 
+/*using css to create a cross*/
+.cell.x::before,
+.cell.x::after,
+.board.x > .cell:not(.x):not(.circle):hover::before,
+.board.x > .cell:not(.x):not(.circle):hover::after
+{
+	content: '';
+	width: calc(var(--mark-size) * .15);
+	height: var(--mark-size);
+	/*
+		sets the position absolute to its parent (cell div)
+		so that the position of edge wont be affected by relative positioning.
+	*/
+	position: absolute
+}
+
+.board.x > .cell:not(.x):not(.circle):hover::before,
+.board.x > .cell:not(.x):not(.circle):hover::after,
+.board.circle > .cell:not(.x):not(.circle):hover::before
+{
+	background-color: lightgrey;
+}
+
+.cell.x::before,
+.cell.x::after,
+.cell.circle::before
+{
+	background-color: black;
+}
+
+.cell.x::before,
+.board.x > .cell:not(.x):not(.circle):hover::before
+{
+	transform: rotate(45deg);
+}
+
+.cell.x::after,
+.board.x > .cell:not(.x):not(.circle):hover::after
+{
+	transform: rotate(-45deg);
+}
+
+/*using css to create a circle*/
+.cell.circle::before,
+.cell.circle::after,
+.board.circle > .cell:not(.x):not(.circle):hover::before,
+.board.circle > .cell:not(.x):not(.circle):hover::after
+{
+	content: '';
+	border-radius: 50%;
+	position: absolute;
+}
+
+.cell.circle::before,
+.board.circle > .cell:not(.x):not(.circle):hover::before
+{
+	width: calc(var(--mark-size) * 0.9);
+	height: calc(var(--mark-size) * 0.9);
+}
+
+.cell.circle::after,
+.board.circle > .cell:not(.x):not(.circle):hover::after
+{
+	width: calc(var(--mark-size) * 0.6);
+	height: calc(var(--mark-size) * 0.6);
+	background-color: white;
+}
+
+/*handles message and button*/
+.message
+{
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background-color: rgba(0, 0, 0, .9);
+	display: none;
+	justify-content: center;
+	align-items: center;
+	color: white;
+	font-size: 5rem;
+	flex-direction: column;
+}
+
+.message > button
+{
+	font-size: 3rem;
+	background-color: white;
+	border: 1px solid white;
+	border-radius: 5px;
+	padding: .25em .5em;
+	cursor: pointer;
+}
+
+.message > button:hover
+{
+	background-color: black;
+	color: white;
+	border-color: white;
+}
