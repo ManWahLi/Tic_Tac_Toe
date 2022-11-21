@@ -23,7 +23,7 @@ body
 {
 	/*sets the board size to viewport width and height*/
 	width: 100vw;
-	height:	100vh;
+	height:	80vh;
 	/*sets board to be a grid container. its child items become grid-items.*/
 	display: grid;
 	/*specifies the number (and the widths) of columns in a grid layout.*/
@@ -192,4 +192,11 @@ body
 	background-color: black;
 	color: white;
 	border-color: white;
+}
+
+.restart
+{
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
